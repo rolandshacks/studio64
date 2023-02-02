@@ -1,0 +1,458 @@
+{
+	"name": "studio64",
+	"displayName": "Studio64",
+	"description": "Studio64 - The C64 Development Environment",
+	"version": "1.0.0",
+	"preview": true,
+	"publisher": "rosc",
+	"license": "SEE LICENSE IN LICENSE",
+	"icon": "resources/icons/icon.png",
+	"author": {
+		"name": "Roland Schabenberger"
+	},
+	"homepage": "https://github.com/rolandshacks/studio64",
+	"private": true,
+	"engines": {
+		"vscode": "^1.73.0"
+	},
+	"main": "./main.js",
+	"bin": "main.js",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/rolandshacks/studio64"
+	},
+	"scripts": {
+		"lint": "eslint .",
+		"pretest": "npm run lint",
+		"test": "cd test && jest --runInBand --config ./jest.config.js"
+	},
+	"dependencies": {
+		"@vscode/debugadapter": "1.51.0",
+		"await-notify": "^1.0.1"
+	},
+	"devDependencies": {
+		"@types/node": "^18.11.11",
+		"@types/vscode": "^1.73.0",
+		"eslint": "^8.29.0",
+		"jest": "^29.3.1",
+		"typescript": "^3.6.2"
+	},
+	"galleryBanner": {
+		"color": "#6c9fd2",
+		"theme": "light"
+	},
+	"activationEvents": [
+		"onStartupFinished",
+		"onLanguage:asm",
+		"onDebug",
+		"onCommand:studio64.showWelcome",
+        "onCommand:studio64.createProjectAsm",
+		"onCommand:studio64.createProjectC",
+		"onCommand:studio64.createProjectCpp",
+		"onCommand:workbench.action.tasks.runTask"
+	],
+	"keywords": [
+		"studio64",
+		"c64",
+		"assembler",
+		"6502",
+		"emulator"
+	],
+	"categories": [
+		"Programming Languages",
+		"Snippets",
+		"Debuggers",
+		"Formatters"
+	],
+	"contributes": {
+        "commands": [
+            {
+                "command": "studio64.showWelcome",
+                "title": "Getting Started",
+                "category": "Studio64"
+            },
+            {
+                "command": "studio64.showSettings",
+                "title": "Open Settings",
+                "category": "Studio64"
+            },
+            {
+                "command": "studio64.createProjectAsm",
+                "title": "Create ACME Assembler Project",
+                "category": "Studio64"
+            },
+            {
+                "command": "studio64.createProjectC",
+                "title": "Create CC65 C Project",
+                "category": "Studio64"
+            },
+            {
+                "command": "studio64.createProjectCpp",
+                "title": "Create LLVM-MOS C++ Project",
+                "category": "Studio64"
+            }
+        ],
+		"walkthroughs": [
+			{
+				"id": "studio64",
+				"title": "Get Started with Studio64",
+				"description": "Learn how to quickly setup the Studio64 development environment.",
+				"steps": [
+					{
+						"id": "welcome",
+						"title": "Welcome to Studio64!",
+						"description": "Studio64 is an easy way to develop code for the Commodore C64.\n\n[Visit Home Page](https://github.com/rolandshacks/studio64)",
+						"media": {
+							"markdown": "resources/walkthroughs/welcome.md"
+						},
+						"completionEvents": []
+					},
+					{
+						"id": "setup_acme",
+						"title": "Setup ACME Cross-Assembler",
+						"description": "In order to use ACME, please download, install and add the ACME install directory to the Studio64 preferences.\n\n[Visit ACME Home Page](https://sourceforge.net/projects/acme-crossass)\n\n[Update Settings](command:studio64.showSettings?%22acme%22)",
+						"media": {
+							"markdown": "resources/walkthroughs/acme.md"
+						},
+						"completionEvents": [
+							"onSettingChanged:studio64.acmeInstallDir"
+						]
+					},
+					{
+						"id": "setup_cc65",
+						"title": "Setup CC65 C-Compiler",
+						"description": "Studio64 supports the CC65 C-compiler.\n\n[Visit CC65 Home Page](https://cc65.github.io)\n\n[Update Settings](command:studio64.showSettings?%22cc65%22)",
+						"media": {
+							"markdown": "resources/walkthroughs/cc65.md"
+						},
+						"completionEvents": [
+							"onSettingChanged:studio64.cc65InstallDir"
+						]
+					},
+					{
+						"id": "setup_llvm",
+						"title": "Setup LLVM-MOS C/C++ Compiler",
+						"description": "Studio64 supports the LLVM-MOS C++ Compiler.\n\n[Visit LLVM-MOS Home Page](https://github.com/llvm-mos/llvm-mos-sdk)\n\n[Update Settings](command:studio64.showSettings?%22llvm%22)",
+						"media": {
+							"markdown": "resources/walkthroughs/llvm.md"
+						},
+						"completionEvents": [
+							"onSettingChanged:studio64.llvmInstallDir"
+						]
+					},
+					{
+						"id": "setup_vice",
+						"title": "Setup VICE Emulator",
+						"description": "Studio64 supports the VICE Emulator.\n\n[Visit VICE Home Page](https://vice-emu.sourceforge.io)\n\n[Update Settings](command:studio64.showSettings?%22emulator%22)",
+						"media": {
+							"markdown": "resources/walkthroughs/vice.md"
+						},
+						"completionEvents": [
+							"onSettingChanged:studio64.emulatorExecutable"
+						]
+					},
+					{
+						"id": "setup_project",
+						"title": "Create a Studio64 Project",
+						"description": "Studio64 provides a custom build system and project configuration.\n\n[Create ACME Assembler Project](command:studio64.createProjectAsm)\n\n[Create CC65 C Project](command:studio64.createProjectC)\n\n[Create LLVM-MOS C++ Project](command:studio64.createProjectCpp)",
+						"media": {
+							"markdown": "resources/walkthroughs/project.md"
+						},
+						"completionEvents": []
+					},
+					{
+						"id": "read_help",
+						"title": "Read the Docs",
+						"description": "The README.md contains a lot more details.\n\n[Visit Home Page](https://github.com/rolandshacks/studio64)",
+						"media": {
+							"markdown": "README.md"
+						},
+						"completionEvents": [
+							"onLink:https://github.com/rolandshacks/studio64"
+						]
+					}
+
+				]
+			}
+		],
+		"problemMatchers": [
+			{
+				"name": "builder",
+				"owner": "studio64",
+				"fileLocation": [
+					"autoDetect",
+					"${workspaceFolder}"
+				],
+				"pattern": {
+                    "regexp": "^(\\S*)\\(\\s*(\\d*)\\s*\\)\\s*:\\s*(\\w*).*:\\s*(.*)$",
+					"severity": 3,
+					"file": 1,
+					"location": 2,
+					"message": 4
+				}
+			}
+		],
+		"languages": [
+			{
+				"id": "asm",
+				"aliases": [
+					"6502",
+					"asm",
+					"acme"
+				],
+				"extensions": [
+					".asm",
+					".acme",
+					".s"
+				],
+				"configuration": "./language/asm.language.json"
+			}
+		],
+		"grammars": [
+			{
+				"language": "asm",
+				"scopeName": "source.asm",
+				"path": "./language/asm.grammar.json"
+			}
+		],
+		"snippets": [
+			{
+				"language": "asm",
+				"path": "./language/asm.snippets.json"
+			},
+			{
+				"language": "json",
+				"path": "./language/json.snippets.json"
+			}
+		],
+		"customEditors": [
+			{
+				"viewType": "studio64.prg",
+				"displayName": "C64 Program",
+				"selector": [
+					{
+						"filenamePattern": "*.prg"
+					}
+				]
+			}
+		],
+		"configuration": [
+			{
+				"id": "build",
+				"title": "Build System",
+				"order": 10,
+				"properties": {
+					"studio64.autoBuild": {
+						"type": "boolean",
+						"default": true,
+						"description": "Enable automatic build after save"
+					},
+					"studio64.acmeInstallDir": {
+						"type": "string",
+						"default": "",
+						"description": "Path to ACME assembler installation"
+					},
+					"studio64.cc65InstallDir": {
+						"type": "string",
+						"default": "",
+						"description": "Path to CC65 compiler installation"
+					},
+					"studio64.llvmInstallDir": {
+						"type": "string",
+						"default": "",
+						"description": "Path to LLVM-MOS SDK installation"
+					},
+					"studio64.buildDefines": {
+						"type": "string",
+						"default": "",
+						"description": "Global build defines"
+					},
+					"studio64.buildIncludePaths": {
+						"type": "string",
+						"default": "",
+						"description": "Global build include paths"
+					},
+					"studio64.buildArgs": {
+						"type": "string",
+						"default": "",
+						"description": "Global additional build command line options"
+					}
+				}
+			},
+			{
+				"id": "emulation",
+				"title": "Emulator",
+				"order": 11,
+				"properties": {
+					"studio64.emulatorExecutable": {
+						"type": "string",
+						"default": "x64sc",
+						"description": "Path to emulator executable"
+					},
+					"studio64.emulatorArgs": {
+						"type": "string",
+						"default": "",
+						"description": "Additional emulator command line options"
+					}
+				}
+			},
+			{
+				"id": "misc",
+				"title": "Misc",
+				"order": 12,
+				"properties": {
+					"studio64.showWelcome": {
+						"type": "boolean",
+						"default": true,
+						"description": "Show welcome page"
+					},
+					"studio64.loglevel": {
+						"type": "string",
+						"default": "info",
+						"enum": [
+							"error",
+							"warn",
+							"info",
+							"debug",
+							"trace"
+						],
+						"enumDescriptions": [
+							"Set logging level to ERROR",
+							"Set logging level to WARNING",
+							"Set logging level to INFO (default)",
+							"Set logging level to DEBUG. Use this to show debugging information",
+							"Set logging level to TRACE. This is the maximum verbosity setting."
+						],
+						"description": "Set console output verbosity level"
+					}
+				}
+			}
+		],
+		"breakpoints": [
+			{
+				"language": "asm"
+			}
+		],
+		"taskDefinitions": [
+			{
+				"type": "studio64",
+				"required": [],
+				"properties": {
+					"action": {
+						"type": "string",
+						"description": "Task action to be performed. 'build', 'rebuild' and 'clean' is supported."
+					},
+					"project": {
+						"type": "string",
+						"description": "Optional project file if not using the default 'project-config.json'."
+					}
+				}
+			}
+		],
+		"debuggers": [
+			{
+				"type": "6502",
+				"label": "6502 Cpu Debugger",
+				"runtime": "node",
+				"configurationAttributes": {
+					"launch": {
+						"required": [
+							"program"
+						],
+						"properties": {
+							"program": {
+								"type": "string",
+								"description": "Path to executable program",
+								"default": ""
+							},
+							"pc": {
+								"type": "string",
+								"description": "Override initial program counter (PC)",
+								"default": "$0000"
+							}
+						}
+					}
+				},
+				"initialConfigurations": [],
+				"configurationSnippets": [
+					{
+						"label": "Launch 6502 program",
+						"description": "A new configuration for the 6502 debugger.",
+						"body": {
+							"type": "6502",
+							"request": "launch",
+							"name": "Launch Program",
+							"program": "${workspaceFolder}/build/program.prg"
+						}
+					}
+				],
+				"variables": {}
+			},
+			{
+				"type": "vice",
+				"label": "Debugger for Vice Emulator",
+				"runtime": "node",
+				"configurationAttributes": {
+					"launch": {
+						"required": [
+							"program"
+						],
+						"properties": {
+							"program": {
+								"type": "string",
+								"description": "Path to executable program",
+								"default": ""
+							},
+							"hostname": {
+								"type": "string",
+								"description": "Hostname or IP address of VICE host process",
+								"default": "localhost"
+							},
+							"port": {
+								"type": "number",
+								"description": "Port of VICE host process",
+								"default": "6502"
+							}
+						}
+					},
+					"attach": {
+						"required": [
+							"program"
+						],
+						"properties": {
+							"program": {
+								"type": "string",
+								"description": "Path to executable program",
+								"default": ""
+							},
+							"hostname": {
+								"type": "string",
+								"description": "Hostname or IP address of VICE host process",
+								"default": "localhost"
+							},
+							"port": {
+								"type": "number",
+								"description": "Port of VICE host process",
+								"default": "6502"
+							}
+						}
+					}
+				},
+				"initialConfigurations": [],
+				"configurationSnippets": [
+					{
+						"label": "Launch in Vice Emulator",
+						"description": "A new configuration for the Vice debugger.",
+						"body": {
+							"type": "vice",
+							"request": "launch",
+							"name": "Launch Program",
+							"program": "${workspaceFolder}/build/program.prg"
+						}
+					}
+				],
+				"variables": {}
+			}
+		]
+	}
+}
